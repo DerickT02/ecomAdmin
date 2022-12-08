@@ -29,7 +29,7 @@ export function App() {
           <input type = "number" placeholder= "Product Price" onChange = {handleProductPriceChange}></input>
         </div>
         <div class = "submit">
-          <button onClick = {() => {addProduct(productName, productPrice)}}>
+          <button onClick = {() => {addProduct(undefined, productPrice)}}>
             Add Product
           </button>
         </div>

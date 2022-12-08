@@ -2,16 +2,18 @@ import { app, db } from './config'
 import { addDoc, collection } from 'firebase/firestore'
 
 
-export async function addProduct(productName: string, productPrice: number){
+export async function addProduct(productName?: string, productPrice?: number){
+    let success = false
     let productRef = collection(db, 'products')
-    let addProductDoc = await addDoc(productRef, {
+     await addDoc(productRef, {
         productName: productName,
         productPrice: productPrice
     }).then((res) => {
-        console.log("Successfully Added Product")
+        console.log(res)
+         success = true
     }).catch((err) => {
-        console.log("Unsuccessfully Added Product")
+        console.log(err)
     })
-    
+    return success
 }
 
