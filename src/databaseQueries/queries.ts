@@ -9,7 +9,7 @@ export async function addProduct(productName?: string, productPrice?: number){
         productName: productName,
         productPrice: productPrice
     }).then((res) => {
-        console.log(res)
+       
          success = true
     }).catch((err) => {
         console.log(err)
