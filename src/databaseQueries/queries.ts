@@ -9,10 +9,10 @@ export async function addProduct(productName?: string, productPrice?: number){
         productName: productName,
         productPrice: productPrice
     }).then((res) => {
-       
          success = true
     }).catch((err) => {
         console.log(err)
+        throw err
     })
     return success
 }

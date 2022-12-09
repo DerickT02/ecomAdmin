@@ -6,11 +6,12 @@ describe("adding a product to the products collection in firebase", () => {
         
         return expect(addProduct("Green Keyboard", 299.99)).resolves.toEqual(true)
     })
-/*
-    it("Throws error since a field is left empty", () => {
-        
-        expect(() => {addProduct(undefined, 299.99)}).toThrow("Fail")
-    
+
+    //test a faulty input. The test should pass because we are testing a faulty inout
+    it("Throws error since a field is left empty", async () => {
+        expect.assertions(1)
+        await addProduct(undefined, 299.99).catch(err => {
+            expect(err).toEqual("FirebaseError: Function addDoc() called with invalid data. Unsupported field value: undefined \(found in field productName in document products\/[a-zA-Z]{20}\)")
+        })
     })
-    */
 })
