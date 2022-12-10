@@ -7,6 +7,7 @@ export function App() {
   const [count, setCount] = useState(0)
   const [productName, setProductName] = useState("")
   const [productPrice, setProductPrice] = useState(0.00)
+  const [productList, setProductList] = useState<any[]>([])
 
   const handleProductNameChange = (event: any) => {
     setProductName(event.target.value)
@@ -17,8 +18,17 @@ export function App() {
   }
 
 useEffect(() => {
-  getAllProducts()
+  getAllProducts().then((res) => {
+    console.log(res)
+    setProductList(res)
+
+  }).catch(() => {
+    console.log("Could Not Get Products")
+  })
 })
+
+console.log(JSON.stringify(productList))
+
 
 
   return (
@@ -34,7 +44,18 @@ useEffect(() => {
           <button onClick = {() => {addProduct(undefined, productPrice)}}>
             Add Product
           </button>
+          
         </div>
+        <div>
+            {productList.map((product) => {
+              return (
+                <>
+                  <p>{product.productName}</p>
+                  <p>{product.productPrice}</p>
+                </>
+              )
+            })}
+          </div>
       </div>
         
        
