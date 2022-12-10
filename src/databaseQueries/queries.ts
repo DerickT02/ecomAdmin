@@ -1,5 +1,5 @@
 import { app, db } from './config'
-import { addDoc, collection, getDocs } from 'firebase/firestore'
+import { addDoc, collection, deleteDoc, getDocs, doc } from 'firebase/firestore'
 
 
 export async function addProduct(productName?: string, productPrice?: number){
@@ -19,13 +19,20 @@ export async function addProduct(productName?: string, productPrice?: number){
 
 export async function getAllProducts(){
     let productsSnapshot = await getDocs(collection(db, "products"))
+    let result: any[] = []
     productsSnapshot.forEach((doc) => {
-        console.log(doc.id)
-        console.log(doc.data())
+        let price = doc.data().productPrice
+        let name = doc.data().productName
+        let product = {productPrice: price, productName: name, id: doc.id}
+        result = [...result, product]
     })
-    return "Get All Products"
+    console.log(result)
+    return result
 }
 
 export async function deleteProduct(productID: string){
-    //save for later 
+    await deleteDoc(doc(db, "products", productID)).catch((err) => {
+        console.log("Product does not exist in database")
+    })
+    return "Successfully Deleted Product"
 }

@@ -15,8 +15,9 @@ describe("adding a product to the products collection in firebase", () => {
 })
 
 describe("getting all products in the products collection in firebase", () => {
-    it("Gets all products in the products collection", async () => {
-        await expect(getAllProducts()).resolves.toBe("Get All Products")
+    it("Gets all products in the products collection and check if it is an array", async () => {
+        let res = await getAllProducts()
+        expect(!!res &&  Array.isArray(res)).toBe(true)
     })
 })
 
