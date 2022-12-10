@@ -1,4 +1,4 @@
-import { addProduct } from "../databaseQueries/queries";
+import { addProduct, getAllProducts } from "../databaseQueries/queries";
 import {describe, it, expect} from "vitest"
 
 describe("adding a product to the products collection in firebase", () => {
@@ -12,5 +12,11 @@ describe("adding a product to the products collection in firebase", () => {
         expect.assertions(1)
         await expect(addProduct(undefined, 299.99)).rejects.toThrowError()
         })
+})
+
+describe("getting all products in the products collection in firebase", () => {
+    it("Gets all products in the products collection", async () => {
+        await expect(getAllProducts()).resolves.toBe("Get All Products")
+    })
 })
 

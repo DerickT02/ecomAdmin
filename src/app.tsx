@@ -1,6 +1,6 @@
-import { useState } from 'preact/hooks'
+import { useState, useEffect } from 'preact/hooks'
 import preactLogo from './assets/preact.svg'
-import {addProduct} from './databaseQueries/queries'
+import { addProduct, getAllProducts} from './databaseQueries/queries'
 import './app.css'
 
 export function App() {
@@ -16,8 +16,10 @@ export function App() {
     setProductPrice(event.target.value)
   }
 
-  
-//help me please
+useEffect(() => {
+  getAllProducts()
+})
+
 
   return (
     <>
