@@ -1,5 +1,5 @@
 import { app, db } from './config'
-import { addDoc, collection } from 'firebase/firestore'
+import { addDoc, collection, getDocs } from 'firebase/firestore'
 
 
 export async function addProduct(productName?: string, productPrice?: number){
@@ -17,3 +17,15 @@ export async function addProduct(productName?: string, productPrice?: number){
     return success
 }
 
+export async function getAllProducts(){
+    let productsSnapshot = await getDocs(collection(db, "products"))
+    productsSnapshot.forEach((doc) => {
+        console.log(doc.id)
+        console.log(doc.data())
+    })
+    return "Get All Products"
+}
+
+export async function deleteProduct(productID: string){
+    //save for later 
+}
