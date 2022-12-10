@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'preact/hooks'
 import preactLogo from './assets/preact.svg'
-import { addProduct, getAllProducts} from './databaseQueries/queries'
+import { addProduct, getAllProducts, deleteProduct} from './databaseQueries/queries'
 import './app.css'
 
 export function App() {
@@ -25,7 +25,7 @@ useEffect(() => {
   }).catch(() => {
     console.log("Could Not Get Products")
   })
-})
+}, [])
 
 console.log(JSON.stringify(productList))
 
@@ -41,7 +41,7 @@ console.log(JSON.stringify(productList))
           <input type = "number" placeholder= "Product Price" onChange = {handleProductPriceChange}></input>
         </div>
         <div class = "submit">
-          <button onClick = {() => {addProduct(undefined, productPrice)}}>
+          <button onClick = {() => {addProduct(productName, productPrice)}}>
             Add Product
           </button>
           
@@ -50,8 +50,10 @@ console.log(JSON.stringify(productList))
             {productList.map((product) => {
               return (
                 <>
+                  
                   <p>{product.productName}</p>
                   <p>{product.productPrice}</p>
+                  <button onClick = {() => {deleteProduct(product.id)}}>X</button>
                 </>
               )
             })}

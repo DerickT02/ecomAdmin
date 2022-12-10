@@ -30,9 +30,16 @@ export async function getAllProducts(){
     return result
 }
 
-export async function deleteProduct(productID: string){
-    await deleteDoc(doc(db, "products", productID)).catch((err) => {
-        console.log("Product does not exist in database")
+export async function deleteProduct(productID: any){
+    
+
+    await deleteDoc(doc(db, "products", productID))
+    .then(() => {
+        console.log("Successfully Deleted")
     })
-    return "Successfully Deleted Product"
+    .catch(() => {
+        console.log("Unsuccessfully Deleted")
+    })
+
+
 }
