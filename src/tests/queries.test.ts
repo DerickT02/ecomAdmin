@@ -1,4 +1,4 @@
-import { addProduct, getAllProducts } from "../databaseQueries/queries";
+import { addProduct, getAllProducts, deleteProduct } from "../databaseQueries/queries";
 import {describe, it, expect} from "vitest"
 
 describe("adding a product to the products collection in firebase", () => {
@@ -20,4 +20,6 @@ describe("getting all products in the products collection in firebase", () => {
         expect(!!res &&  Array.isArray(res)).toBe(true)
     })
 })
+
+
 
