@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'preact/hooks'
 import preactLogo from './assets/preact.svg'
 import { addProduct, getAllProducts, deleteProduct} from './databaseQueries/queries'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { storage } from './databaseQueries/config'
 import './app.css'
 
 export function App() {
@@ -8,6 +10,8 @@ export function App() {
   const [productName, setProductName] = useState("")
   const [productPrice, setProductPrice] = useState(0.00)
   const [productList, setProductList] = useState<any[]>([])
+  const [currImage, setCurrImage] = useState<File>();
+  const [imgUrl, setImgUrl] = useState("");
 
   const handleProductNameChange = (event: any) => {
     setProductName(event.target.value)
@@ -17,15 +21,45 @@ export function App() {
     setProductPrice(event.target.value)
   }
 
+async function uploadImageToFirebase(file: any){
+   
+    let productsImagesStorage = ref(storage, `productImages/${file.name}`)
+    uploadBytes(productsImagesStorage, file).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((url) => {
+            
+            setImgUrl(url)
+            console.log(imgUrl)
+        })
+        
+    })
+    
+}
+
+  const handleImageSubmit = () => {
+    uploadImageToFirebase(currImage)
+  }
+
+  const handleImageChange = (e: any) => {
+    console.log("File " + e.target.value)
+    setCurrImage(e.target.value)
+     
+    
+   }
+
 useEffect(() => {
   getAllProducts().then((res) => {
-    console.log(res)
+  
     setProductList(res)
 
   }).catch(() => {
     console.log("Could Not Get Products")
   })
 }, [])
+
+useEffect(() => {
+  console.log("File in State " + currImage)
+  handleImageSubmit()
+}, [currImage, imgUrl])
 
 console.log(JSON.stringify(productList))
 
@@ -39,9 +73,12 @@ console.log(JSON.stringify(productList))
         <div class = "input">
           <input placeholder= "Product Name" onChange = {handleProductNameChange}></input>
           <input type = "number" placeholder= "Product Price" onChange = {handleProductPriceChange}></input>
+          <input type = "file" onChange = {handleImageChange}/>
         </div>
+        
         <div class = "submit">
-          <button onClick = {() => {addProduct(productName, productPrice)}}>
+          
+          <button onClick = {() => {addProduct(productName, productPrice, imgUrl)}}>
             Add Product
           </button>
           
@@ -50,10 +87,10 @@ console.log(JSON.stringify(productList))
             {productList.map((product) => {
               return (
                 <>
-                  
+                  <img src = {product.productImage || ""}></img>
                   <p>{product.productName}</p>
-                  <p>{product.productPrice}</p>
-                  <button onClick = {() => {deleteProduct(product.id)}}>X</button>
+                  <p>${product.productPrice}</p>
+                  <button onClick = {() => {deleteProduct(product.id)}}>Delete Product</button>
                 </>
               )
             })}

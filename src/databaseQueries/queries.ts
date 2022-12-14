@@ -1,13 +1,15 @@
-import { app, db } from './config'
-import { addDoc, collection, deleteDoc, getDocs, doc } from 'firebase/firestore'
+import { app, db, storage } from './config'
+import { addDoc, collection, deleteDoc, getDocs, doc, } from 'firebase/firestore'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 
 
-export async function addProduct(productName?: string, productPrice?: number){
+export async function addProduct(productName?: string, productPrice?: number, productImage?: any){
     let success = false
     let productRef = collection(db, 'products')
      await addDoc(productRef, {
         productName: productName,
-        productPrice: productPrice
+        productPrice: productPrice,
+        productImage: productImage
     }).then((res) => {
          success = true
     }).catch((err) => {
@@ -23,7 +25,8 @@ export async function getAllProducts(){
     productsSnapshot.forEach((doc) => {
         let price = doc.data().productPrice
         let name = doc.data().productName
-        let product = {productPrice: price, productName: name, id: doc.id}
+        let img = doc.data().productImage
+        let product = {productPrice: price, productName: name, id: doc.id, productImage: img}
         result = [...result, product]
     })
     console.log(result)
@@ -31,8 +34,6 @@ export async function getAllProducts(){
 }
 
 export async function deleteProduct(productID: any){
-    
-
     await deleteDoc(doc(db, "products", productID))
     .then(() => {
         console.log("Successfully Deleted")
@@ -40,6 +41,6 @@ export async function deleteProduct(productID: any){
     .catch(() => {
         console.log("Unsuccessfully Deleted")
     })
-
-
 }
+
+
