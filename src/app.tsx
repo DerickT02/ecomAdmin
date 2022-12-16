@@ -40,9 +40,12 @@ async function uploadImageToFirebase(file: any){
   }
 
   const handleImageChange = (e: any) => {
-    console.log("File " + e.target.value)
-    setCurrImage(e.target.value)
-     
+    const files = (e.target as HTMLInputElement).files
+    if(files && files.length >= 0){
+      setCurrImage(files[0])
+    }
+    console.log("Files " + JSON.stringify(files))
+    console.log(currImage?.name)  
     
    }
 
@@ -70,28 +73,42 @@ console.log(JSON.stringify(productList))
      
       <h1>Welcome To Admin</h1>
       <div class="card">
-        <div class = "input">
-          <input placeholder= "Product Name" onChange = {handleProductNameChange}></input>
-          <input type = "number" placeholder= "Product Price" onChange = {handleProductPriceChange}></input>
-          <input type = "file" onChange = {handleImageChange}/>
-        </div>
+        <div class = "input-form">
+          <div class = "input">
+            <input placeholder= "Product Name" onChange = {handleProductNameChange}></input>
+            <input type = "number" placeholder= "Product Price" onChange = {handleProductPriceChange}></input>
+            <input type = "file" onChange = {handleImageChange}/>
+          </div>
         
-        <div class = "submit">
-          
-          <button onClick = {() => {addProduct(productName, productPrice, imgUrl)}}>
-            Add Product
-          </button>
-          
+          <div class = "submit">
+            <button onClick = {() => {addProduct(productName, productPrice, imgUrl)}}>
+              Add Product
+            </button>
+          </div>
         </div>
-        <div>
+
+        <div class = "product-grid-metrics">
+          <p>Name</p>
+          <p>Price</p>
+          <p># Of Sales</p>
+          <p>Overall Rating</p>
+        </div>
+
+
+        <div class = "product-card-container">
             {productList.map((product) => {
+              console.log(product.productImage)
               return (
-                <>
-                  <img src = {product.productImage || ""}></img>
-                  <p>{product.productName}</p>
-                  <p>${product.productPrice}</p>
+                <div class = "product-card">
+                  <div class = "product-name-and-image">
+                    {product.productImage ? <img src = {product.productImage}></img> : <img></img>}
+                    <p>{product.productName}</p>
+                  </div>
+                  <p class= "price">${product.productPrice}</p>
+                  <p>300</p>
+                  <p>5.0</p>
                   <button onClick = {() => {deleteProduct(product.id)}}>Delete Product</button>
-                </>
+                </div>
               )
             })}
           </div>
