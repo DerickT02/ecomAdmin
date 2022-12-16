@@ -1,6 +1,6 @@
 FROM node:16
 WORKDIR /app
-COPY . .
+ADD . .
 RUN npm install
 CMD ["npm", "run", "dev"]
-EXPOSE 5173
+EXPOSE 3000
