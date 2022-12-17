@@ -70,22 +70,27 @@ console.log(JSON.stringify(productList))
 
   return (
     <>
-     
-      <h1>Welcome To Admin</h1>
       <div class="card">
-        <div class = "input-form">
+      <div class = "input-form">
+       
           <div class = "input">
+          <h1>Create Product</h1>
             <input placeholder= "Product Name" onChange = {handleProductNameChange}></input>
             <input type = "number" placeholder= "Product Price" onChange = {handleProductPriceChange}></input>
             <input type = "file" onChange = {handleImageChange}/>
-          </div>
-        
-          <div class = "submit">
-            <button onClick = {() => {addProduct(productName, productPrice, imgUrl)}}>
-              Add Product
-            </button>
-          </div>
+            <div class = "submit">
+              <button onClick = {() => {addProduct(productName, productPrice, imgUrl)}}>
+                Add Product
+              </button>
+            </div>
+          </div> 
+
+        <div class = "product-metrics">
+            <h1>Product Metrics</h1>
         </div>
+      </div>
+       
+          
 
         <div class = "product-grid-metrics">
           <p>Name</p>
