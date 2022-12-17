@@ -5,25 +5,34 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.preact:hover {
-  filter: drop-shadow(0 0 2em #673ab8aa);
-}
+
 
 .input-form{
+  display: flex;
+  flex-direction: row;
   margin-bottom: 50px;
+  gap: 30%;
 }
 
 .input{
   display: flex;
   flex-direction: column;
   gap: 2px;
+  justify-content: center;
+  margin-left: 30px;
+  background-color: black;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-bottom: 3%;
+}
+
+.input .submit{
+  margin-left: auto;
+}
+
+.input .submit button:hover{
+background-color: #43934B;
+transition: 0.3s ease-in;
 }
 
 .card {
