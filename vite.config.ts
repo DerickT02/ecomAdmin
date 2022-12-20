@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [preact()],
   server: {
     host: '0.0.0.0',
-    port: 4000
+    port: 3001
   }
 })
