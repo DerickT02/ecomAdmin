@@ -6,6 +6,7 @@ import { storage, auth } from './databaseQueries/config'
 import { signUp, logout, signIn } from './databaseQueries/auth'
 import { onAuthStateChanged } from 'firebase/auth'
 import './app.css'
+import ProductsList from './components/ProductsList'
 
 export function App() {
   const [count, setCount] = useState(0)
@@ -19,7 +20,6 @@ export function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [navIsClicked, setNavIsClicked] = useState(false)
   const [userFormAction, setUserFormAction] = useState("")
-  let user = "";
 
   const handleProductNameChange = (event: any) => {
     setProductName(event.target.value)
@@ -80,7 +80,7 @@ useEffect(() => {
 useEffect(() => {
   onAuthStateChanged(auth, (user) => {
     if(user){
-      console.log(user)
+      console.log("User UID " + user.uid)
       setIsLoggedIn(true)
     }
     else{
@@ -93,6 +93,7 @@ useEffect(() => {
   return (
     <>
       <div class="card">
+        {/*Navbar.tsx*/}
         <div class = "nav-bar">
           {isLoggedIn ? <><button onClick = {logout}>Logout</button></> : <>
           {navIsClicked ? <>
@@ -110,11 +111,11 @@ useEffect(() => {
           }
     
         </div>
+        {/**/}
         {isLoggedIn ? <>
-          <div class = "input-form">
-       
-       <div class = "input">
-       <h1>Create Product</h1>
+        <div class = "input-form"> 
+        <div class = "input">
+        <h1>Create Product</h1>
          <input placeholder= "Product Name" onChange = {handleProductNameChange}></input>
          <input type = "number" placeholder= "Product Price" onChange = {handleProductPriceChange}></input>
          <input type = "file" onChange = {handleImageChange}/>
@@ -130,15 +131,16 @@ useEffect(() => {
      </div>
    </div>
     
-       
-     <div class = "product-grid-metrics">
+       {/* ProductsList.tsx && ProductsList.css/ Line 135-161*/}
+       {/*
+       <div class = "product-grid-metrics">
        <p>Name</p>
        <p>Price</p>
        <p># Of Sales</p>
        <p>Overall Rating</p>
      </div>
 
-
+      
      <div class = "product-card-container">
          {productList.map((product) => {
            console.log(product.productImage)
@@ -156,6 +158,10 @@ useEffect(() => {
            )
          })}
        </div>
+       
+       */}
+       <ProductsList />
+     
         </> : 
         <>
         <h1>Please Log In Or Sign Up</h1>
