@@ -7,6 +7,7 @@ import { signUp, logout, signIn } from './databaseQueries/auth'
 import { onAuthStateChanged } from 'firebase/auth'
 import './app.css'
 import ProductsList from './components/ProductsList'
+import CreateProducts from './components/CreateProduct'
 
 export function App() {
   const [count, setCount] = useState(0)
@@ -56,6 +57,8 @@ async function uploadImageToFirebase(file: any){
     console.log(currImage?.name)  
     
    }
+
+   
 
 useEffect(() => {
   console.log(email)
@@ -113,7 +116,7 @@ useEffect(() => {
         </div>
         {/**/}
         {isLoggedIn ? <>
-        <div class = "input-form"> 
+        {/*<div class = "input-form"> 
         <div class = "input">
         <h1>Create Product</h1>
          <input placeholder= "Product Name" onChange = {handleProductNameChange}></input>
@@ -129,7 +132,8 @@ useEffect(() => {
      <div class = "product-metrics">
          <h1>Product Metrics</h1>
      </div>
-   </div>
+   </div>*/}
+        <CreateProducts />
     
        {/* ProductsList.tsx && ProductsList.css/ Line 135-161*/}
        {/*
