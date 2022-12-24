@@ -1,14 +1,15 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth"
-import { auth } from './config'
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, getAuth} from "firebase/auth"
+import { auth, db } from './config'
+import { addDoc, collection, doc, setDoc } from "firebase/firestore"
 
 export async function signUp(email: string, password: string){
-    createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
-        console.log(userCredential.user)
-       
+    let credential = await createUserWithEmailAndPassword(auth, email, password)
+    console.log(credential)
+    await setDoc(doc(db, "users", credential.user.uid), {
+        email: email,
+        role: "admin"
     })
-    .catch((error) => {
-        console.log(error)
-    })
+    
 }
 
 export async function signIn(email: string, password: string){
