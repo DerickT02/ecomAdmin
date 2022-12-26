@@ -1,5 +1,5 @@
 import { logout, signIn, signUp } from "../databaseQueries/auth"
-import { useState } from 'preact/hooks'
+import { useEffect, useState } from 'preact/hooks'
 interface Props{
     isLoggedIn: boolean
 
@@ -11,6 +11,10 @@ export default function Navbar(props: Props){
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [navIsClicked, setNavIsClicked] = useState(false)
     const [userFormAction, setUserFormAction] = useState("")
+
+    useEffect(() => {
+        console.log("Email " + email, "Password " + password)
+    }, [email, password])
 
     return(
         <>
