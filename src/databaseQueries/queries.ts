@@ -26,7 +26,7 @@ export async function getAllProducts(){
    
     let productsSnapshot = await getDocs(collection(db, "products"))
     let result: any[] = []
-    console.log("Current User " + auth.currentUser?.uid)
+ 
     productsSnapshot.forEach((doc) => {
         let price = doc.data().productPrice
         let name = doc.data().productName

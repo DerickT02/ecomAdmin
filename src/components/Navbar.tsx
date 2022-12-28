@@ -12,9 +12,7 @@ export default function Navbar(props: Props){
     const [navIsClicked, setNavIsClicked] = useState(false)
     const [userFormAction, setUserFormAction] = useState("")
 
-    useEffect(() => {
-        console.log("Email " + email, "Password " + password)
-    }, [email, password])
+
 
     return(
         <>
