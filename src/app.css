@@ -32,8 +32,8 @@
 }
 
 .input .submit button:hover{
-background-color: #43934B;
-transition: 0.3s ease-in;
+  background-color: #43934B;
+  transition: 0.3s ease-in;
 }
 
 .card {
@@ -53,10 +53,13 @@ transition: 0.3s ease-in;
   grid-template-columns: 100px 540px 290px 200px;
 }
 
+#edit:hover{
+  background-color: firebrick;
+}
 .product-card{
   display: grid;
-  grid-template-columns: 100px 300px 300px 10px 450px;
-  column-gap: 100px;
+  grid-template-columns: 200px 400px 300px 160px 320px 170px;
+  column-gap: 5px;
   row-gap: 10px;
   width: 1608px;  
   border-top: 1px solid rgb(255, 255, 255);
@@ -66,6 +69,54 @@ transition: 0.3s ease-in;
   margin-bottom: 27px;
   
 }
+
+.edit-card{
+  display: grid;
+  grid-template-columns: 200px 200px 200px 100px 100px;
+  column-gap: 10px;
+  width: 1608px;  
+  border-top: 1px solid rgb(255, 255, 255);
+  border-bottom: 1px solid rgb(255, 255, 255);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 27px;
+}
+
+.edit-card-input{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding-left: 150%;
+}
+
+.button-container{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-left: 100px;
+}
+
+#confirm-change:hover{
+  background-color: #43934B;
+  transition: 0.3s ease-in;
+}
+
+#cancel-change:hover{
+  background-color: red;
+  transition: 0.3s ease-in;
+}
+
+#upload-new-image:hover{
+  background-color: rgb(25, 166, 182);
+  transition: 0.3s ease-in;
+}
+
+
+.image-input{
+  width: 100px;
+  visibility: hidden;
+}
+
 
 .price{
   justify-self: start;
