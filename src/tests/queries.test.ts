@@ -1,5 +1,4 @@
-import { addProduct, getAllProducts, deleteProduct } from "../databaseQueries/queries";
-import { signIn, signUp } from "../databaseQueries/auth";
+import { addProduct, getAllProducts, deleteProduct, updateProduct } from "../databaseQueries/queries";
 import {describe, it, expect} from "vitest"
 
 describe("adding a product to the products collection in firebase", () => {
@@ -22,6 +21,13 @@ describe("getting all products in the products collection in firebase", () => {
         
         let res = await getAllProducts()
         expect(!!res &&  Array.isArray(res)).toBe(true)
+    })
+})
+
+describe("updating products", () => {
+    it("", () => {
+        return expect(updateProduct("testdoc", "testdoc",0,"yomama")).resolves.toEqual(true)
+
     })
 })
  
