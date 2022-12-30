@@ -16,6 +16,7 @@ describe("adding a product to the products collection in firebase", () => {
         })
 })
 
+/*
 describe("getting all products in the products collection in firebase", () => {
     it("Gets all products in the products collection and check if it is an array", async () => {
         
@@ -23,6 +24,7 @@ describe("getting all products in the products collection in firebase", () => {
         expect(!!res &&  Array.isArray(res)).toBe(true)
     })
 })
+*/
 
 describe("updating products", () => {
     it("", () => {
