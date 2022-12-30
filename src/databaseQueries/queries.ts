@@ -1,5 +1,5 @@
 import { app, auth, db, storage } from './config'
-import { addDoc, collection, deleteDoc, getDocs, doc} from 'firebase/firestore'
+import { addDoc, collection, deleteDoc, getDocs, doc, updateDoc} from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { getAuth } from 'firebase/auth'
 import { signIn } from './auth'
@@ -48,6 +48,22 @@ export async function deleteProduct(productID: any){
         console.log(error)
         console.log("Unsuccessfully Deleted")
     })
+}
+
+export async function updateProduct(id: any, productName: string, productPrice: number, productImage: any){
+    let success = false
+    const docToUpdate = doc(db, "products", id)
+    await updateDoc(docToUpdate, {
+        productName: productName,
+        productPrice: productPrice,
+        productImage: productImage
+    }).then((res) => {
+        success = true
+   }).catch((err) => {
+       console.log(err)
+       throw err
+   })
+   return success
 }
 
 
