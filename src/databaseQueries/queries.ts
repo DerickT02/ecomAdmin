@@ -12,7 +12,10 @@ export async function addProduct(productName?: string, productPrice?: number, pr
      await addDoc(productRef, {
         productName: productName,
         productPrice: productPrice,
-        productImage: productImage
+        productImage: productImage,
+        sales: 0,
+        rating: 0,
+        reviews: []
     }).then((res) => {
          success = true
     }).catch((err) => {
