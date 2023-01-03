@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'preact/hooks'
-import { getAllProducts, deleteProduct } from '../databaseQueries/queries'
+import {  deleteProduct } from '../databaseQueries/queries'
 import ProductCard from './ProductCard'
-import { collection, query, where, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { db } from '../databaseQueries/config';
 
 
@@ -15,7 +15,10 @@ export default function ProductsList(){
             let price = doc.data().productPrice
             let name = doc.data().productName
             let img = doc.data().productImage
-            let product = {productPrice: price, productName: name, id: doc.id, productImage: img}
+            let sales = doc.data().sales
+            let rating = doc.data().rating
+            let product = {productPrice: price, productName: name, id: doc.id, productImage: img, sales: sales, rating: rating}
+            
             productsList.push(product)
           })
           setProductList(productsList)
@@ -35,7 +38,7 @@ export default function ProductsList(){
          {productList.map((product) => {
            
            return (
-             <ProductCard productImage={product.productImage}  productName={product.productName} productPrice={product.productPrice} id={product.id} deleteProduct={deleteProduct} />
+             <ProductCard productImage={product.productImage}  productName={product.productName} productPrice={product.productPrice} id={product.id} deleteProduct={deleteProduct} sales = {product.sales} rating = {product.rating} />
            )
          })}
        </div>

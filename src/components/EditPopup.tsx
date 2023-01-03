@@ -18,7 +18,6 @@ export default function EditPopup(props: Props){
     const [productName, setProductName] = useState(props.productName)
     const [productPrice, setProductPrice] = useState(props.productPrice)
     const [imgUrl, setImgUrl] = useState(props.productImage)
-    const [isLoading, setIsLoading] = useState(false)
     const [loadingState, setLoadingState] = useState("")
     const inputRef = useRef<HTMLInputElement | null>(null);
     const nameRef = useRef<HTMLInputElement | null>(null);
