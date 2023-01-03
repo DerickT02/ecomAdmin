@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "preact/hooks" 
 import { storage } from '../databaseQueries/config';
-import { uploadBytes,ref, getDownloadURL } from 'firebase/storage';
+import { uploadBytes,ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { updateProduct } from '../databaseQueries/queries'
 interface Props{
     toggleEditState: () => void,
@@ -19,6 +19,7 @@ export default function EditPopup(props: Props){
     const [productPrice, setProductPrice] = useState(props.productPrice)
     const [imgUrl, setImgUrl] = useState(props.productImage)
     const [isLoading, setIsLoading] = useState(false)
+    const [loadingState, setLoadingState] = useState("")
     const inputRef = useRef<HTMLInputElement | null>(null);
     const nameRef = useRef<HTMLInputElement | null>(null);
     console.log(nameRef.current?.value)
@@ -39,18 +40,32 @@ export default function EditPopup(props: Props){
       }
 
       async function uploadImageToFirebase(file: any){
-        setIsLoading(true)
-        let productsImagesStorage = ref(storage, `productImages/${file.name}`)
-        uploadBytes(productsImagesStorage, file).then((snapshot) => {
-            getDownloadURL(snapshot.ref).then((url) => {
-                setIsLoading(false)
-                setImgUrl(url)
-                console.log("Edit img " + imgUrl)
-            })
-            
-        })
-        
-    }
+        setLoadingState("")
+         let productsImagesStorage = ref(storage, `productImages/${file.name}`)
+         let uploadTask = uploadBytesResumable(productsImagesStorage, file)
+         uploadTask.on("state_changed", (snapshot) => {
+           console.log("Progress", (snapshot.bytesTransferred / snapshot.totalBytes) * 100, "%")
+           switch (snapshot.state) {
+             case 'paused':
+               console.log('Upload is paused');
+               break;
+             case 'running':
+               setLoadingState("Loading")
+               break;
+             case 'success':
+              
+           }
+         }, (error) => {
+           setLoadingState("Could Not Load Image")
+         }, () => {
+           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+             
+             setImgUrl(downloadURL)
+             setLoadingState("Done")
+           });
+         })
+         
+     }
     
     const handleImageChange = (e: any) => {
         const files = (e.target as HTMLInputElement).files
@@ -63,10 +78,12 @@ export default function EditPopup(props: Props){
         
        }
 
-       useEffect(() => {
-        console.log("File in Edit State " + JSON.stringify(currImage))
-        handleImageSubmit()
-      }, [currImage, imgUrl])
+       useEffect(() => { 
+    }, [imgUrl])
+
+    useEffect(() => {
+      handleImageSubmit()
+    },[currImage])
     
     
     const handleInputRef = () => {
@@ -88,7 +105,7 @@ export default function EditPopup(props: Props){
                     <input onChange = {handleProductNameChange} placeholder="Name" type = "text"></input>
                     <input onChange = {handleProductPriceChange} placeholder="Price"  type = "number"></input>
                     <button onClick = {handleInputRef} id = "upload-new-image">Upload Image</button>
-                  
+                    {loadingState}
                     <div class = "button-container">
                         <button id = "confirm-change" onClick = {() => {handleSubmit(props.productId,productName,productPrice,imgUrl)}}>Confirm Changes</button>
                         <button id = "cancel-change" onClick={props.toggleEditState}>Cancel</button>
