@@ -6,7 +6,9 @@ interface Props{
     productName: any
     productPrice: number,
     id: any,
-    deleteProduct: any
+    deleteProduct: any,
+    sales: number,
+    rating: number
   
 }
 
@@ -27,8 +29,8 @@ export default function ProductCard(props: Props){
               <p>{props.productName}</p>
             </div>   
             <p class= "price">${props.productPrice}</p>
-            <p>300</p>
-            <p>5.0</p>
+            <p>{props.sales}</p>
+            <p>{props.rating}</p>
             <button id = "edit" onClick={toggleEdit}>Edit</button>
             <button onClick = {() => {props.deleteProduct(props.id)}}>Delete Product</button>
           </div>

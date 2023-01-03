@@ -28,9 +28,7 @@ async function getAllProducts(){
         
         let docRef = doc(db, "products", document.id)
         updateDoc(docRef, {
-            sales: 0,
-            rating: 0,
-            reviews: []
+            stock: 10,
         }).then(() => {
             console.log(document.data())
         })

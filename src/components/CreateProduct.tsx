@@ -2,6 +2,8 @@ import { useState, useEffect } from 'preact/hooks'
 import { addProduct } from '../databaseQueries/queries';
 import { storage } from '../databaseQueries/config';
 import { uploadBytes,ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from '../databaseQueries/config';
 
 
 export default function CreateProducts(){
@@ -10,6 +12,8 @@ export default function CreateProducts(){
     const [productName, setProductName] = useState("")
     const [productPrice, setProductPrice] = useState(0.00)
     const [loadingState, setLoadingState] = useState("")
+    const [totalSales, setTotalSales] = useState(0)
+    const [revenue, setRevenue] = useState(0)
 
     const handleProductNameChange = (event: any) => {
         setProductName(event.target.value)
@@ -71,6 +75,28 @@ export default function CreateProducts(){
         handleImageSubmit()
       },[currImage])
 
+      useEffect(() => {
+        let productsListRef = collection(db, "products")
+       onSnapshot(productsListRef, (snapshot) => {
+        let totalRevenue = 0
+        let totalSales = 0
+          snapshot.docs.forEach((doc) => {
+            let price = doc.data().productPrice
+            let sales = doc.data().sales
+            
+            totalSales += sales
+            totalRevenue += (sales * price)
+            
+            
+          })
+
+          setRevenue(totalRevenue)
+          setTotalSales(totalSales)
+        })
+        
+    }, [])
+
+
     return (
         <>
         <div class = "input-form"> 
@@ -89,6 +115,8 @@ export default function CreateProducts(){
 
      <div class = "product-metrics">
          <h1>Product Metrics</h1>
+         <h2>Total Sales: {totalSales}</h2>
+         <h2>Total Revenue:  ${revenue}</h2>
      </div>
    </div>
         </>
