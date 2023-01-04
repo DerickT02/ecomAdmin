@@ -50,7 +50,7 @@
 
 .product-grid-metrics{
   display: grid;
-  grid-template-columns: 100px 540px 290px 200px;
+  grid-template-columns: 100px 540px 230px 200px 200px;
 }
 
 #edit:hover{
@@ -58,7 +58,7 @@
 }
 .product-card{
   display: grid;
-  grid-template-columns: 200px 400px 300px 160px 320px 170px;
+  grid-template-columns: 200px 400px 250px 160px 250px 100px 130px;
   column-gap: 5px;
   row-gap: 10px;
   width: 1608px;  

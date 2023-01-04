@@ -17,7 +17,8 @@ export default function ProductsList(){
             let img = doc.data().productImage
             let sales = doc.data().sales
             let rating = doc.data().rating
-            let product = {productPrice: price, productName: name, id: doc.id, productImage: img, sales: sales, rating: rating}
+            let stock = doc.data().stock
+            let product = {productPrice: price, productName: name, id: doc.id, productImage: img, sales: sales, rating: rating, stock: stock}
             
             productsList.push(product)
           })
@@ -31,6 +32,7 @@ export default function ProductsList(){
        <p>Price</p>
        <p># Of Sales</p>
        <p>Overall Rating</p>
+       <p># in Stock</p>
      </div>
 
       
@@ -38,7 +40,7 @@ export default function ProductsList(){
          {productList.map((product) => {
            
            return (
-             <ProductCard productImage={product.productImage}  productName={product.productName} productPrice={product.productPrice} id={product.id} deleteProduct={deleteProduct} sales = {product.sales} rating = {product.rating} />
+             <ProductCard productImage={product.productImage}  productName={product.productName} productPrice={product.productPrice} id={product.id} deleteProduct={deleteProduct} sales = {product.sales} rating = {product.rating} stock = {product.stock}/>
            )
          })}
        </div>
