@@ -15,6 +15,7 @@ export async function addProduct(productName?: string, productPrice?: number, pr
         productImage: productImage,
         sales: 0,
         rating: 0,
+        stock: 10,
         reviews: []
     }).then((res) => {
          success = true
