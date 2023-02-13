@@ -11,7 +11,7 @@ export async function addProduct(productName?: string, productPrice?: number, pr
     let productRef = collection(db, 'products')
      await addDoc(productRef, {
         productName: productName,
-        productPrice: productPrice,
+        productPrice: productPrice != undefined ? +productPrice : 0,
         productImage: productImage,
         sales: 0,
         rating: 0,
@@ -59,7 +59,7 @@ export async function updateProduct(id: any, productName: string, productPrice: 
     const docToUpdate = doc(db, "products", id)
     await updateDoc(docToUpdate, {
         productName: productName,
-        productPrice: productPrice,
+        productPrice: +productPrice,
         productImage: productImage
     }).then((res) => {
         success = true
